@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /
+
+# redirect www to non-www
+RewriteCond %{HTTP_HOST} ^www\.rlzt\.tk$ [NC]
+RewriteRule ^(.*)$ http://rlzt.tk/$1 [L,R=301]
+
+# internally route to /index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [PT,L]
+
+# redirect direct requests to /index.php to remove it
+RewriteCond %{THE_REQUEST} \ /index\.php/?([^\?\ ]*)
+RewriteRule ^ http://rlzt.tk/%1 [L,R=301]
